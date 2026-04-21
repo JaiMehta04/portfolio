@@ -134,20 +134,22 @@
   counters.forEach(function (el) { counterObserver.observe(el); });
 
   function animateCounter(el) {
-    var target = parseInt(el.dataset.count);
+    var target = parseFloat(el.dataset.count);
+    var hasDecimal = el.dataset.count.indexOf('.') !== -1;
+    var decimals = hasDecimal ? (el.dataset.count.split('.')[1] || '').length : 0;
     var duration = 1500;
-    var start = 0;
     var startTime = null;
 
     function step(timestamp) {
       if (!startTime) startTime = timestamp;
       var progress = Math.min((timestamp - startTime) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-      el.textContent = Math.floor(eased * target);
+      var current = eased * target;
+      el.textContent = hasDecimal ? current.toFixed(decimals) : Math.floor(current);
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
-        el.textContent = target;
+        el.textContent = hasDecimal ? target.toFixed(decimals) : target;
       }
     }
     requestAnimationFrame(step);
