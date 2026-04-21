@@ -14,15 +14,16 @@
   // =============================================
   // >>> FIREBASE CONFIG — REPLACE WITH YOUR OWN
   // =============================================
-  var firebaseConfig = {
-    apiKey:            "YOUR_API_KEY",
-    authDomain:        "YOUR_PROJECT.firebaseapp.com",
-    databaseURL:       "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-    projectId:         "YOUR_PROJECT",
-    storageBucket:     "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId:             "YOUR_APP_ID"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBOrcb4oRfd_4h8aqCOy5odiHN25iS-UXI",
+  authDomain: "portfolio-85d1a.firebaseapp.com",
+  databaseURL: "https://portfolio-85d1a-default-rtdb.firebaseio.com",
+  projectId: "portfolio-85d1a",
+  storageBucket: "portfolio-85d1a.firebasestorage.app",
+  messagingSenderId: "741390322021",
+  appId: "1:741390322021:web:2e221aaf90eef712d8b98c",
+  measurementId: "G-VPHBPKS3XN"
+};
 
   // Only initialize if Firebase SDK is loaded and config is set
   if (typeof firebase === 'undefined' || firebaseConfig.apiKey === "YOUR_API_KEY") {
