@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Dashboard — Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --bg-card: #161618;
+            --border: #2a2a2d;
+            --text: #e4e4e7;
+            --text-sec: #a1a1aa;
+            --text-muted: #71717a;
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --accent: #22d3ee;
+            --success: #22c55e;
+            --font: 'Inter', -apple-system, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        h1 span { color: var(--primary); }
+        .stats-bar {
+            display: flex;
+            gap: 24px;
+        }
+        .stat-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 24px;
+            text-align: center;
+            min-width: 140px;
+        }
+        .stat-box .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+        .stat-box .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .controls input, .controls select {
+            padding: 10px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: var(--font);
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .controls input:focus, .controls select:focus {
+            border-color: var(--primary);
+        }
+        .controls input { flex: 1; min-width: 200px; }
+        .btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #4f46e5; }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-sec);
+        }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary-light); background: transparent; }
+
+        /* Table */
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg-card);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+        thead { background: rgba(99,102,241,0.08); }
+        th {
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-sec);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+        }
+        th:hover { color: var(--primary-light); }
+        td {
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            color: var(--text-sec);
+            white-space: nowrap;
+        }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        .country-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            background: rgba(99,102,241,0.1);
+            border-radius: 20px;
+            font-size: 0.82rem;
+            color: var(--primary-light);
+        }
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+        .pagination button {
+            padding: 8px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-sec);
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: 0.85rem;
+        }
+        .pagination button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+        .pagination button:hover:not(.active) { border-color: var(--primary); }
+
+        @media (max-width: 768px) {
+            body { padding: 20px 12px; }
+            .stats-bar { width: 100%; }
+            .stat-box { flex: 1; min-width: 0; padding: 12px; }
+            .stat-box .number { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>Visitor <span>Dashboard</span></h1>
+            <div class="stats-bar">
+                <div class="stat-box">
+                    <div class="number" id="totalVisits">—</div>
+                    <div class="label">Total Visits</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" id="uniqueCountries">—</div>
+                    <div class="label">Countries</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number" id="todayVisits">—</div>
+                    <div class="label">Today</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search by city, country, IP...">
+            <select id="countryFilter">
+                <option value="">All Countries</option>
+            </select>
+            <button class="btn btn-outline" id="exportBtn">Export CSV</button>
+            <button class="btn btn-outline" id="refreshBtn">Refresh</button>
+        </div>
+
+        <div class="table-wrap">
+            <div class="loading" id="loadingState">
+                Connecting to Firebase...
+            </div>
+            <table id="visitorTable" style="display:none;">
+                <thead>
+                    <tr>
+                        <th data-sort="timestamp"># Time ↕</th>
+                        <th data-sort="ip">IP ↕</th>
+                        <th data-sort="city">City ↕</th>
+                        <th data-sort="country">Country ↕</th>
+                        <th data-sort="region">Region ↕</th>
+                        <th data-sort="referrer">Referrer ↕</th>
+                        <th data-sort="page">Page ↕</th>
+                        <th>Device</th>
+                    </tr>
+                </thead>
+                <tbody id="visitorBody"></tbody>
+            </table>
+        </div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+    <script>
+    (function () {
+        'use strict';
+
+        // =============================================
+        // >>> SAME FIREBASE CONFIG AS tracker.js
+        // =============================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBOrcb4oRfd_4h8aqCOy5odiHN25iS-UXI",
+  authDomain: "portfolio-85d1a.firebaseapp.com",
+  projectId: "portfolio-85d1a",
+  storageBucket: "portfolio-85d1a.firebasestorage.app",
+  messagingSenderId: "741390322021",
+  appId: "1:741390322021:web:2e221aaf90eef712d8b98c",
+  measurementId: "G-VPHBPKS3XN"
+};
+
+        var loadingState = document.getElementById('loadingState');
+        var table = document.getElementById('visitorTable');
+
+        if (firebaseConfig.apiKey === "YOUR_API_KEY") {
+            loadingState.textContent = 'Firebase not configured. Update firebaseConfig in admin.html and tracker.js';
+            return;
+        }
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        var db = firebase.database();
+
+        var allVisitors = [];
+        var filteredVisitors = [];
+        var sortField = 'timestamp';
+        var sortDir = -1; // -1 = newest first
+        var perPage = 25;
+        var currentPage = 1;
+
+        // Elements
+        var totalEl = document.getElementById('totalVisits');
+        var countriesEl = document.getElementById('uniqueCountries');
+        var todayEl = document.getElementById('todayVisits');
+        var tbody = document.getElementById('visitorBody');
+        var searchInput = document.getElementById('searchInput');
+        var countryFilter = document.getElementById('countryFilter');
+        var paginationEl = document.getElementById('pagination');
+
+        // Load data
+        function loadData() {
+            loadingState.textContent = 'Loading visitors...';
+            loadingState.style.display = '';
+            table.style.display = 'none';
+
+            db.ref('visitors').orderByChild('timestamp').once('value')
+                .then(function (snapshot) {
+                    allVisitors = [];
+                    snapshot.forEach(function (child) {
+                        var v = child.val();
+                        v._key = child.key;
+                        allVisitors.push(v);
+                    });
+                    allVisitors.reverse(); // newest first
+                    populateCountryFilter();
+                    applyFilters();
+                    loadingState.style.display = 'none';
+                    table.style.display = '';
+                })
+                .catch(function (err) {
+                    loadingState.textContent = 'Error: ' + err.message;
+                });
+        }
+
+        function populateCountryFilter() {
+            var countries = {};
+            allVisitors.forEach(function (v) {
+                if (v.country) countries[v.country] = true;
+            });
+            var opts = '<option value="">All Countries</option>';
+            Object.keys(countries).sort().forEach(function (c) {
+                opts += '<option value="' + escapeHtml(c) + '">' + escapeHtml(c) + '</option>';
+            });
+            countryFilter.innerHTML = opts;
+        }
+
+        function applyFilters() {
+            var search = searchInput.value.trim().toLowerCase();
+            var country = countryFilter.value;
+
+            filteredVisitors = allVisitors.filter(function (v) {
+                if (country && v.country !== country) return false;
+                if (search) {
+                    var haystack = [
+                        v.ip, v.city, v.region, v.country, v.referrer, v.page, v.org
+                    ].join(' ').toLowerCase();
+                    if (haystack.indexOf(search) === -1) return false;
+                }
+                return true;
+            });
+
+            // Sort
+            filteredVisitors.sort(function (a, b) {
+                var aVal = (a[sortField] || '').toString().toLowerCase();
+                var bVal = (b[sortField] || '').toString().toLowerCase();
+                if (aVal < bVal) return -1 * sortDir;
+                if (aVal > bVal) return 1 * sortDir;
+                return 0;
+            });
+
+            currentPage = 1;
+            updateStats();
+            render();
+        }
+
+        function updateStats() {
+            totalEl.textContent = allVisitors.length;
+            var countries = {};
+            allVisitors.forEach(function (v) { if (v.country) countries[v.country] = true; });
+            countriesEl.textContent = Object.keys(countries).length;
+            var today = new Date().toISOString().slice(0, 10);
+            var todayCount = allVisitors.filter(function (v) {
+                return v.timestamp && v.timestamp.slice(0, 10) === today;
+            }).length;
+            todayEl.textContent = todayCount;
+        }
+
+        function render() {
+            var start = (currentPage - 1) * perPage;
+            var page = filteredVisitors.slice(start, start + perPage);
+
+            if (page.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:#71717a;">No visitors found</td></tr>';
+                paginationEl.innerHTML = '';
+                return;
+            }
+
+            var html = '';
+            page.forEach(function (v, i) {
+                var time = v.timestamp ? formatDate(v.timestamp) : '—';
+                var device = parseDevice(v.userAgent || '');
+                html += '<tr>' +
+                    '<td>' + escapeHtml(time) + '</td>' +
+                    '<td>' + escapeHtml(v.ip || '—') + '</td>' +
+                    '<td>' + escapeHtml(v.city || '—') + '</td>' +
+                    '<td><span class="country-badge">' + escapeHtml(v.country || '—') + '</span></td>' +
+                    '<td>' + escapeHtml(v.region || '—') + '</td>' +
+                    '<td>' + escapeHtml(v.referrer || 'direct') + '</td>' +
+                    '<td>' + escapeHtml(v.page || '/') + '</td>' +
+                    '<td>' + escapeHtml(device) + '</td>' +
+                    '</tr>';
+            });
+            tbody.innerHTML = html;
+
+            // Pagination
+            var totalPages = Math.ceil(filteredVisitors.length / perPage);
+            var pagHtml = '';
+            if (totalPages > 1) {
+                for (var p = 1; p <= totalPages; p++) {
+                    pagHtml += '<button' + (p === currentPage ? ' class="active"' : '') +
+                        ' data-page="' + p + '">' + p + '</button>';
+                }
+            }
+            paginationEl.innerHTML = pagHtml;
+        }
+
+        function formatDate(iso) {
+            var d = new Date(iso);
+            return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) +
+                ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function parseDevice(ua) {
+            if (/mobile|android|iphone/i.test(ua)) return 'Mobile';
+            if (/tablet|ipad/i.test(ua)) return 'Tablet';
+            return 'Desktop';
+        }
+
+        function escapeHtml(str) {
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // Events
+        searchInput.addEventListener('input', applyFilters);
+        countryFilter.addEventListener('change', applyFilters);
+        document.getElementById('refreshBtn').addEventListener('click', loadData);
+
+        paginationEl.addEventListener('click', function (e) {
+            if (e.target.tagName === 'BUTTON') {
+                currentPage = parseInt(e.target.dataset.page);
+                render();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // Column sorting
+        document.querySelectorAll('th[data-sort]').forEach(function (th) {
+            th.addEventListener('click', function () {
+                var field = th.dataset.sort;
+                if (sortField === field) {
+                    sortDir *= -1;
+                } else {
+                    sortField = field;
+                    sortDir = -1;
+                }
+                applyFilters();
+            });
+        });
+
+        // Export CSV
+        document.getElementById('exportBtn').addEventListener('click', function () {
+            if (filteredVisitors.length === 0) return;
+            var cols = ['timestamp', 'ip', 'city', 'region', 'country', 'referrer', 'page', 'userAgent', 'org', 'timezone'];
+            var csv = cols.join(',') + '\n';
+            filteredVisitors.forEach(function (v) {
+                var row = cols.map(function (c) {
+                    var val = (v[c] || '').toString().replace(/"/g, '""');
+                    return '"' + val + '"';
+                });
+                csv += row.join(',') + '\n';
+            });
+            var blob = new Blob([csv], { type: 'text/csv' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'visitors_' + new Date().toISOString().slice(0, 10) + '.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        // Go
+        loadData();
+    })();
+    </script>
+</body>
+</html>
