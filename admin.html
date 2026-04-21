@@ -237,7 +237,9 @@
                         <th data-sort="region">Region ↕</th>
                         <th data-sort="referrer">Referrer ↕</th>
                         <th data-sort="page">Page ↕</th>
-                        <th>Device</th>
+                        <th data-sort="deviceType">Device ↕</th>
+                        <th data-sort="browser">Browser ↕</th>
+                        <th data-sort="os">OS ↕</th>
                     </tr>
                 </thead>
                 <tbody id="visitorBody"></tbody>
@@ -378,7 +380,7 @@ const firebaseConfig = {
             var page = filteredVisitors.slice(start, start + perPage);
 
             if (page.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:#71717a;">No visitors found</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px;color:#71717a;">No visitors found</td></tr>';
                 paginationEl.innerHTML = '';
                 return;
             }
@@ -386,7 +388,7 @@ const firebaseConfig = {
             var html = '';
             page.forEach(function (v, i) {
                 var time = v.timestamp ? formatDate(v.timestamp) : '—';
-                var device = parseDevice(v.userAgent || '');
+                var deviceInfo = parseDevice(v.userAgent || '', v);
                 html += '<tr>' +
                     '<td>' + escapeHtml(time) + '</td>' +
                     '<td>' + escapeHtml(v.ip || '—') + '</td>' +
@@ -395,7 +397,9 @@ const firebaseConfig = {
                     '<td>' + escapeHtml(v.region || '—') + '</td>' +
                     '<td>' + escapeHtml(v.referrer || 'direct') + '</td>' +
                     '<td>' + escapeHtml(v.page || '/') + '</td>' +
-                    '<td>' + escapeHtml(device) + '</td>' +
+                    '<td>' + escapeHtml(deviceInfo.device) + '</td>' +
+                    '<td>' + escapeHtml(deviceInfo.browser) + '</td>' +
+                    '<td>' + escapeHtml(deviceInfo.os) + '</td>' +
                     '</tr>';
             });
             tbody.innerHTML = html;
@@ -418,10 +422,27 @@ const firebaseConfig = {
                 ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
         }
 
-        function parseDevice(ua) {
-            if (/mobile|android|iphone/i.test(ua)) return 'Mobile';
-            if (/tablet|ipad/i.test(ua)) return 'Tablet';
-            return 'Desktop';
+        function parseDevice(ua, v) {
+            // Use stored values if available (new tracker format)
+            if (v && v.browser && v.os && v.deviceType) {
+                return { browser: v.browser, os: v.os, device: v.deviceType };
+            }
+            // Fallback: parse from user agent for older entries
+            var browser = 'Unknown', os = 'Unknown', device = 'Desktop';
+            if (/Edg\//i.test(ua)) browser = 'Edge';
+            else if (/OPR|Opera/i.test(ua)) browser = 'Opera';
+            else if (/Chrome/i.test(ua)) browser = 'Chrome';
+            else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+            else if (/Firefox/i.test(ua)) browser = 'Firefox';
+            else if (/MSIE|Trident/i.test(ua)) browser = 'IE';
+            if (/Windows/i.test(ua)) os = 'Windows';
+            else if (/Mac OS/i.test(ua)) os = 'macOS';
+            else if (/Android/i.test(ua)) os = 'Android';
+            else if (/iPhone|iPad|iPod/i.test(ua)) os = 'iOS';
+            else if (/Linux/i.test(ua)) os = 'Linux';
+            if (/Mobile|Android.*Mobile|iPhone/i.test(ua)) device = 'Mobile';
+            else if (/iPad|Android(?!.*Mobile)|Tablet/i.test(ua)) device = 'Tablet';
+            return { browser: browser, os: os, device: device };
         }
 
         function escapeHtml(str) {
