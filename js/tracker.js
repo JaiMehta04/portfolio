@@ -135,10 +135,19 @@ const firebaseConfig = {
   };
 
   // Fetch location — try ipinfo.io first (more precise), fallback to ipapi.co
+  // Get your free token at https://ipinfo.io/signup (50K req/month)
+  var IPINFO_TOKEN = 'a712d7fface327'; // <-- paste your ipinfo.io token here
+
   function fetchFromIpinfo() {
-    return fetch('https://ipinfo.io/json')
-      .then(function (res) { return res.json(); })
+    var url = 'https://ipinfo.io/json';
+    if (IPINFO_TOKEN) url += '?token=' + IPINFO_TOKEN;
+    return fetch(url)
+      .then(function (res) {
+        if (!res.ok) throw new Error('ipinfo failed');
+        return res.json();
+      })
       .then(function (geo) {
+        if (geo.bogon) throw new Error('bogon IP'); // localhost/private IPs
         var loc = (geo.loc || '').split(',');
         visitData.ip        = geo.ip || '';
         visitData.city      = geo.city || '';
