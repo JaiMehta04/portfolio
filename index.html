@@ -30,7 +30,8 @@
 
     <!-- ==================== HERO ==================== -->
     <section class="hero" id="hero">
-        <canvas id="particleCanvas"></canvas>
+        <canvas id="neuralCanvas"></canvas>
+        <canvas id="dataRainCanvas"></canvas>
         <div class="hero-content">
             <p class="hero-greeting" data-animate="fade-up">Hello, I'm</p>
             <h1 class="hero-name" data-animate="fade-up" data-delay="100">Jai Mehta</h1>
@@ -62,7 +63,55 @@
             <span>Scroll</span>
             <div class="scroll-line"></div>
         </div>
+
+        <!-- Floating ML Props -->
+        <div class="ml-props" aria-hidden="true">
+            <div class="ml-prop prop-brain" style="top:12%;right:8%">
+                <svg viewBox="0 0 64 64" width="48" height="48"><path fill="none" stroke="currentColor" stroke-width="2" d="M32 8c-8 0-14 6-14 14 0 3 1 6 3 8-3 2-5 6-5 10 0 6 4 11 10 12v4h12v-4c6-1 10-6 10-12 0-4-2-8-5-10 2-2 3-5 3-8 0-8-6-14-14-14z"/><circle cx="26" cy="24" r="2" fill="currentColor" opacity=".6"/><circle cx="38" cy="24" r="2" fill="currentColor" opacity=".6"/><circle cx="32" cy="34" r="2.5" fill="currentColor" opacity=".6"/><path fill="none" stroke="currentColor" stroke-width="1.5" opacity=".4" d="M26 24l6 10m6-10l-6 10"/></svg>
+            </div>
+            <div class="ml-prop prop-tensor" style="top:70%;right:5%">
+                <svg viewBox="0 0 64 64" width="40" height="40"><rect x="16" y="16" width="32" height="32" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".5"/><rect x="22" y="22" width="20" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".6"/><rect x="28" y="28" width="8" height="8" rx="1" fill="currentColor" opacity=".3"/><line x1="16" y1="16" x2="10" y2="10" stroke="currentColor" stroke-width="1.5" opacity=".3"/><line x1="48" y1="16" x2="54" y2="10" stroke="currentColor" stroke-width="1.5" opacity=".3"/><line x1="48" y1="48" x2="54" y2="54" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
+            </div>
+            <div class="ml-prop prop-nodes" style="top:25%;left:3%">
+                <svg viewBox="0 0 64 64" width="44" height="44"><circle cx="16" cy="16" r="4" fill="currentColor" opacity=".4"/><circle cx="48" cy="16" r="4" fill="currentColor" opacity=".4"/><circle cx="16" cy="48" r="4" fill="currentColor" opacity=".4"/><circle cx="48" cy="48" r="4" fill="currentColor" opacity=".4"/><circle cx="32" cy="32" r="5" fill="currentColor" opacity=".6"/><line x1="16" y1="16" x2="32" y2="32" stroke="currentColor" stroke-width="1.5" opacity=".3"/><line x1="48" y1="16" x2="32" y2="32" stroke="currentColor" stroke-width="1.5" opacity=".3"/><line x1="16" y1="48" x2="32" y2="32" stroke="currentColor" stroke-width="1.5" opacity=".3"/><line x1="48" y1="48" x2="32" y2="32" stroke="currentColor" stroke-width="1.5" opacity=".3"/></svg>
+            </div>
+            <div class="ml-prop prop-chart" style="top:60%;left:6%">
+                <svg viewBox="0 0 64 64" width="38" height="38"><polyline fill="none" stroke="currentColor" stroke-width="2" opacity=".5" points="8,52 20,36 32,42 44,20 56,28"/><circle cx="20" cy="36" r="2.5" fill="currentColor" opacity=".5"/><circle cx="32" cy="42" r="2.5" fill="currentColor" opacity=".5"/><circle cx="44" cy="20" r="2.5" fill="currentColor" opacity=".5"/><circle cx="56" cy="28" r="2.5" fill="currentColor" opacity=".5"/></svg>
+            </div>
+            <div class="ml-prop prop-binary" style="top:85%;right:15%">
+                <span>01101 10010</span>
+            </div>
+            <div class="ml-prop prop-code" style="top:8%;left:15%">
+                <span>model.fit()</span>
+            </div>
+        </div>
+
+        <!-- Live Training Terminal -->
+        <div class="hero-terminal" aria-hidden="true">
+            <div class="terminal-header">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+                <span class="terminal-title">training.py</span>
+            </div>
+            <div class="terminal-body" id="terminalBody">
+                <div class="terminal-line">
+                    <span class="t-prompt">$</span> <span class="t-cmd">python train.py --model transformer</span>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <!-- Data Flow Divider -->
+    <div class="data-divider" aria-hidden="true">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+            <path class="data-flow-path" d="M0,30 Q150,10 300,30 T600,30 T900,30 T1200,30" fill="none" stroke="url(#flowGrad)" stroke-width="2"/>
+            <defs><linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3BB9FC" stop-opacity="0"/><stop offset="50%" stop-color="#3BB9FC" stop-opacity="0.6"/><stop offset="100%" stop-color="#6EE7B7" stop-opacity="0"/></linearGradient></defs>
+            <circle class="flow-dot flow-dot-1" r="3" fill="#3BB9FC"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#flow1"/></animateMotion></circle>
+            <circle class="flow-dot flow-dot-2" r="2.5" fill="#6EE7B7"><animateMotion dur="4s" repeatCount="indefinite"><mpath href="#flow1"/></animateMotion></circle>
+            <path id="flow1" d="M0,30 Q150,10 300,30 T600,30 T900,30 T1200,30" fill="none" stroke="none"/>
+        </svg>
+    </div>
 
     <!-- ==================== ABOUT ==================== -->
     <section class="section about" id="about">
@@ -102,7 +151,7 @@
                             <span class="stat-label">GATE DS&amp;AI Score</span>
                         </div>
                     </div>
-                    <a href="resume.pdf" class="btn btn-primary" download>Download Resume</a>
+                    <a href="Jai_Mehta_Resume.pdf" class="btn btn-primary" download>Download Resume</a>
                 </div>
             </div>
         </div>
@@ -227,7 +276,14 @@
 
                 <article class="project-card" data-animate="fade-up" data-delay="300">
                     <div class="project-image">
-                        <div class="project-image-placeholder">Autonomous Vehicles</div>
+                        <div class="project-video-thumb" id="videoThumb">
+                            <video muted loop preload="metadata" playsinline>
+                                <source src="Car_lane_detection.mp4" type="video/mp4">
+                            </video>
+                            <div class="play-icon">
+                                <svg viewBox="0 0 24 24" width="40" height="40"><polygon fill="currentColor" points="5,3 19,12 5,21"/></svg>
+                            </div>
+                        </div>
                         <div class="project-overlay">
                             <a href="#" class="overlay-btn" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a>
                         </div>
@@ -246,9 +302,13 @@
                                 <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                                 Code
                             </a>
-                            <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">
+                            <a href="Car_lane_detection.mp4" class="project-link" target="_blank" rel="noopener noreferrer">
                                 <svg viewBox="0 0 24 24" width="18" height="18"><path stroke="currentColor" stroke-width="2" fill="none" d="M23 7l-7 5 7 5V7z"/><rect stroke="currentColor" stroke-width="2" fill="none" x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
                                 Video
+                            </a>
+                            <a href="https://lane-vehicle-detection-jai.streamlit.app/" class="project-link" target="_blank" rel="noopener noreferrer">
+                                <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M14 3v2H3.01L3 19h18v-8h2v8c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h11zm5 0V0h2v3h3v2h-3v3h-2V5h-3V3h3z"/></svg>
+                                Live Demo
                             </a>
                         </div>
                     </div>
