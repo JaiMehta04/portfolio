@@ -214,20 +214,54 @@
     drawParticles();
   }
 
-  // ---- Contact form (basic feedback) ----
+  // ---- Contact form (EmailJS) ----
+  // Sign up at https://www.emailjs.com/ and fill in these three values:
+  var EMAILJS_PUBLIC_KEY = '';   // Account > API Keys > Public Key
+  var EMAILJS_SERVICE_ID = '';   // Email Services > Service ID
+  var EMAILJS_TEMPLATE_ID = '';  // Email Templates > Template ID
+
+  if (EMAILJS_PUBLIC_KEY) {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  }
+
   var form = document.getElementById('contactForm');
   var status = document.getElementById('formStatus');
 
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      status.textContent = 'Message sent! Thank you for reaching out.';
-      status.className = 'form-status success';
-      form.reset();
-      setTimeout(function () {
-        status.textContent = '';
-        status.className = 'form-status';
-      }, 5000);
+
+      if (!EMAILJS_PUBLIC_KEY) {
+        status.textContent = 'Contact form is not configured yet.';
+        status.className = 'form-status error';
+        return;
+      }
+
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.querySelector('span').textContent = 'Sending...';
+      status.textContent = '';
+      status.className = 'form-status';
+
+      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+        .then(function () {
+          status.textContent = 'Message sent! Thank you for reaching out.';
+          status.className = 'form-status success';
+          form.reset();
+          setTimeout(function () {
+            status.textContent = '';
+            status.className = 'form-status';
+          }, 5000);
+        })
+        .catch(function (err) {
+          status.textContent = 'Oops — something went wrong. Please email me directly.';
+          status.className = 'form-status error';
+          console.error('EmailJS error:', err);
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.querySelector('span').textContent = 'Send Message';
+        });
     });
   }
 })();
