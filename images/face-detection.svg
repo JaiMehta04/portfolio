@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1320"/>
+      <stop offset="100%" stop-color="#101a2e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3BB9FC"/>
+      <stop offset="100%" stop-color="#6EE7B7"/>
+    </linearGradient>
+    <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3BB9FC" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#3BB9FC" stop-opacity="0.5"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bg)"/>
+
+  <!-- Subtle grid -->
+  <g opacity="0.04" stroke="#3BB9FC" stroke-width="0.5">
+    <line x1="0" y1="50" x2="800" y2="50"/><line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="150" x2="800" y2="150"/><line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="250" x2="800" y2="250"/><line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="350" x2="800" y2="350"/><line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="0" y1="450" x2="800" y2="450"/>
+    <line x1="50" y1="0" x2="50" y2="500"/><line x1="100" y1="0" x2="100" y2="500"/>
+    <line x1="150" y1="0" x2="150" y2="500"/><line x1="200" y1="0" x2="200" y2="500"/>
+    <line x1="250" y1="0" x2="250" y2="500"/><line x1="300" y1="0" x2="300" y2="500"/>
+    <line x1="350" y1="0" x2="350" y2="500"/><line x1="400" y1="0" x2="400" y2="500"/>
+    <line x1="450" y1="0" x2="450" y2="500"/><line x1="500" y1="0" x2="500" y2="500"/>
+    <line x1="550" y1="0" x2="550" y2="500"/><line x1="600" y1="0" x2="600" y2="500"/>
+    <line x1="650" y1="0" x2="650" y2="500"/><line x1="700" y1="0" x2="700" y2="500"/>
+    <line x1="750" y1="0" x2="750" y2="500"/>
+  </g>
+
+  <!-- ===== FACE 1 (Center, large) ===== -->
+  <g transform="translate(300, 100)">
+    <!-- Bounding box -->
+    <rect x="0" y="0" width="200" height="240" rx="4" stroke="url(#boxGrad)" stroke-width="2.5" fill="none" filter="url(#glow)"/>
+    <!-- Corner brackets -->
+    <path d="M0,20 L0,4 Q0,0 4,0 L20,0" stroke="#3BB9FC" stroke-width="3" fill="none"/>
+    <path d="M180,0 L196,0 Q200,0 200,4 L200,20" stroke="#3BB9FC" stroke-width="3" fill="none"/>
+    <path d="M0,220 L0,236 Q0,240 4,240 L20,240" stroke="#3BB9FC" stroke-width="3" fill="none"/>
+    <path d="M180,240 L196,240 Q200,240 200,236 L200,220" stroke="#3BB9FC" stroke-width="3" fill="none"/>
+
+    <!-- Face oval -->
+    <ellipse cx="100" cy="115" rx="65" ry="80" stroke="#6EE7B7" stroke-width="1.5" fill="none" opacity="0.3"/>
+
+    <!-- Eyes -->
+    <ellipse cx="72" cy="95" rx="16" ry="10" stroke="#3BB9FC" stroke-width="1.5" fill="none" opacity="0.6"/>
+    <circle cx="72" cy="95" r="4" fill="#3BB9FC" opacity="0.5"/>
+    <ellipse cx="128" cy="95" rx="16" ry="10" stroke="#3BB9FC" stroke-width="1.5" fill="none" opacity="0.6"/>
+    <circle cx="128" cy="95" r="4" fill="#3BB9FC" opacity="0.5"/>
+
+    <!-- Nose -->
+    <path d="M95,105 L100,130 L105,105" stroke="#6EE7B7" stroke-width="1" fill="none" opacity="0.35"/>
+
+    <!-- Mouth -->
+    <path d="M78,145 Q100,160 122,145" stroke="#3BB9FC" stroke-width="1.5" fill="none" opacity="0.4"/>
+
+    <!-- Facial landmarks (dots) -->
+    <circle cx="72" cy="95" r="2.5" fill="#6EE7B7" opacity="0.8"/>
+    <circle cx="128" cy="95" r="2.5" fill="#6EE7B7" opacity="0.8"/>
+    <circle cx="100" cy="125" r="2.5" fill="#6EE7B7" opacity="0.8"/>
+    <circle cx="82" cy="148" r="2.5" fill="#6EE7B7" opacity="0.8"/>
+    <circle cx="118" cy="148" r="2.5" fill="#6EE7B7" opacity="0.8"/>
+
+    <!-- Landmark connections -->
+    <g stroke="#6EE7B7" stroke-width="0.8" opacity="0.25">
+      <line x1="72" y1="95" x2="100" y2="125"/>
+      <line x1="128" y1="95" x2="100" y2="125"/>
+      <line x1="100" y1="125" x2="82" y2="148"/>
+      <line x1="100" y1="125" x2="118" y2="148"/>
+      <line x1="72" y1="95" x2="128" y2="95"/>
+    </g>
+
+    <!-- Confidence label -->
+    <rect x="0" y="-24" width="90" height="20" rx="3" fill="#3BB9FC" opacity="0.85"/>
+    <text x="8" y="-10" font-family="monospace" font-size="11" fill="#0B1320" font-weight="bold">Face 0.97</text>
+  </g>
+
+  <!-- ===== FACE 2 (Left, smaller) ===== -->
+  <g transform="translate(60, 150)">
+    <rect x="0" y="0" width="140" height="170" rx="3" stroke="#6EE7B7" stroke-width="2" fill="none" opacity="0.7" filter="url(#glow)"/>
+    <path d="M0,14 L0,3 Q0,0 3,0 L14,0" stroke="#6EE7B7" stroke-width="2.5" fill="none"/>
+    <path d="M126,0 L137,0 Q140,0 140,3 L140,14" stroke="#6EE7B7" stroke-width="2.5" fill="none"/>
+    <path d="M0,156 L0,167 Q0,170 3,170 L14,170" stroke="#6EE7B7" stroke-width="2.5" fill="none"/>
+    <path d="M126,170 L137,170 Q140,170 140,167 L140,156" stroke="#6EE7B7" stroke-width="2.5" fill="none"/>
+
+    <ellipse cx="70" cy="82" rx="44" ry="55" stroke="#6EE7B7" stroke-width="1" fill="none" opacity="0.25"/>
+    <ellipse cx="52" cy="68" rx="11" ry="7" stroke="#3BB9FC" stroke-width="1" fill="none" opacity="0.5"/>
+    <ellipse cx="88" cy="68" rx="11" ry="7" stroke="#3BB9FC" stroke-width="1" fill="none" opacity="0.5"/>
+    <path d="M58,105 Q70,115 82,105" stroke="#3BB9FC" stroke-width="1" fill="none" opacity="0.35"/>
+
+    <!-- Landmarks -->
+    <circle cx="52" cy="68" r="2" fill="#6EE7B7" opacity="0.7"/>
+    <circle cx="88" cy="68" r="2" fill="#6EE7B7" opacity="0.7"/>
+    <circle cx="70" cy="90" r="2" fill="#6EE7B7" opacity="0.7"/>
+    <circle cx="60" cy="107" r="2" fill="#6EE7B7" opacity="0.7"/>
+    <circle cx="80" cy="107" r="2" fill="#6EE7B7" opacity="0.7"/>
+
+    <rect x="0" y="-22" width="80" height="18" rx="3" fill="#6EE7B7" opacity="0.8"/>
+    <text x="6" y="-9" font-family="monospace" font-size="10" fill="#0B1320" font-weight="bold">Face 0.94</text>
+  </g>
+
+  <!-- ===== FACE 3 (Right, smaller) ===== -->
+  <g transform="translate(570, 130)">
+    <rect x="0" y="0" width="150" height="185" rx="3" stroke="#3BB9FC" stroke-width="2" fill="none" opacity="0.6" filter="url(#glow)"/>
+    <path d="M0,14 L0,3 Q0,0 3,0 L14,0" stroke="#3BB9FC" stroke-width="2.5" fill="none"/>
+    <path d="M136,0 L147,0 Q150,0 150,3 L150,14" stroke="#3BB9FC" stroke-width="2.5" fill="none"/>
+    <path d="M0,171 L0,182 Q0,185 3,185 L14,185" stroke="#3BB9FC" stroke-width="2.5" fill="none"/>
+    <path d="M136,185 L147,185 Q150,185 150,182 L150,171" stroke="#3BB9FC" stroke-width="2.5" fill="none"/>
+
+    <ellipse cx="75" cy="88" rx="48" ry="60" stroke="#3BB9FC" stroke-width="1" fill="none" opacity="0.2"/>
+    <ellipse cx="55" cy="72" rx="12" ry="8" stroke="#3BB9FC" stroke-width="1" fill="none" opacity="0.5"/>
+    <ellipse cx="95" cy="72" rx="12" ry="8" stroke="#3BB9FC" stroke-width="1" fill="none" opacity="0.5"/>
+    <path d="M62,115 Q75,126 88,115" stroke="#3BB9FC" stroke-width="1" fill="none" opacity="0.35"/>
+
+    <circle cx="55" cy="72" r="2" fill="#6EE7B7" opacity="0.7"/>
+    <circle cx="95" cy="72" r="2" fill="#6EE7B7" opacity="0.7"/>
+    <circle cx="75" cy="96" r="2" fill="#6EE7B7" opacity="0.7"/>
+    <circle cx="64" cy="117" r="2" fill="#6EE7B7" opacity="0.7"/>
+    <circle cx="86" cy="117" r="2" fill="#6EE7B7" opacity="0.7"/>
+
+    <rect x="0" y="-22" width="80" height="18" rx="3" fill="#3BB9FC" opacity="0.75"/>
+    <text x="6" y="-9" font-family="monospace" font-size="10" fill="#0B1320" font-weight="bold">Face 0.89</text>
+  </g>
+
+  <!-- ===== Metrics panel (bottom-right) ===== -->
+  <g transform="translate(560, 360)">
+    <rect x="0" y="0" width="210" height="110" rx="8" fill="#101a2e" stroke="rgba(59,185,252,0.2)" stroke-width="1"/>
+    <text x="14" y="22" font-family="monospace" font-size="11" fill="#9FB3C8">Precision</text>
+    <rect x="90" y="12" width="100" height="8" rx="4" fill="#1a2540"/>
+    <rect x="90" y="12" width="94" height="8" rx="4" fill="url(#accent)"/>
+    <text x="195" y="22" font-family="monospace" font-size="10" fill="#6EE7B7" text-anchor="end">94%</text>
+
+    <text x="14" y="46" font-family="monospace" font-size="11" fill="#9FB3C8">Recall</text>
+    <rect x="90" y="36" width="100" height="8" rx="4" fill="#1a2540"/>
+    <rect x="90" y="36" width="85" height="8" rx="4" fill="url(#accent)"/>
+    <text x="195" y="46" font-family="monospace" font-size="10" fill="#6EE7B7" text-anchor="end">85%</text>
+
+    <text x="14" y="70" font-family="monospace" font-size="11" fill="#9FB3C8">F1 Score</text>
+    <rect x="90" y="60" width="100" height="8" rx="4" fill="#1a2540"/>
+    <rect x="90" y="60" width="89" height="8" rx="4" fill="url(#accent)"/>
+    <text x="195" y="70" font-family="monospace" font-size="10" fill="#6EE7B7" text-anchor="end">0.89</text>
+
+    <text x="14" y="94" font-family="monospace" font-size="11" fill="#9FB3C8">Faces</text>
+    <text x="195" y="94" font-family="monospace" font-size="11" fill="#3BB9FC" text-anchor="end">39,123</text>
+  </g>
+
+  <!-- ===== Scan lines effect ===== -->
+  <g opacity="0.03">
+    <line x1="0" y1="0" x2="800" y2="0" stroke="#3BB9FC" stroke-width="1"/>
+    <line x1="0" y1="4" x2="800" y2="4" stroke="#3BB9FC" stroke-width="0.5"/>
+    <line x1="0" y1="8" x2="800" y2="8" stroke="#3BB9FC" stroke-width="1"/>
+    <line x1="0" y1="12" x2="800" y2="12" stroke="#3BB9FC" stroke-width="0.5"/>
+  </g>
+
+  <!-- ===== Title overlay ===== -->
+  <g transform="translate(40, 420)">
+    <text font-family="'Inter', sans-serif" font-size="16" fill="#9FB3C8" opacity="0.6" letter-spacing="3">WIDER FACE BENCHMARK</text>
+    <text y="24" font-family="'Inter', sans-serif" font-size="12" fill="#5f7489" opacity="0.5">RetinaFace · MTCNN · Real-ESRGAN · AdaSR-Face</text>
+  </g>
+
+  <!-- Decorative corners -->
+  <path d="M10,30 L10,10 L30,10" stroke="#3BB9FC" stroke-width="1.5" fill="none" opacity="0.3"/>
+  <path d="M770,10 L790,10 L790,30" stroke="#3BB9FC" stroke-width="1.5" fill="none" opacity="0.3"/>
+  <path d="M10,470 L10,490 L30,490" stroke="#6EE7B7" stroke-width="1.5" fill="none" opacity="0.3"/>
+  <path d="M770,490 L790,490 L790,470" stroke="#6EE7B7" stroke-width="1.5" fill="none" opacity="0.3"/>
+</svg>

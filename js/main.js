@@ -61,10 +61,10 @@
   var typedEl = document.getElementById('typedText');
   var phrases = [
     'Data Science & ML Engineer',
-    'Computer Vision Enthusiast',
-    'NLP & Information Retrieval',
-    'GATE Qualified Researcher',
-    'ISRO Research Intern'
+    'Multi-Agent LLM Systems',
+    'Computer Vision & NLP',
+    'Production ML at John Deere',
+    'ISRO Research Alumnus'
   ];
   var phraseIdx = 0;
   var charIdx = 0;

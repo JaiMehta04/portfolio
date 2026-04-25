@@ -800,6 +800,13 @@ img { max-width: 100%; display: block; }
     letter-spacing: 0.5px;
 }
 
+.project-img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    display: block;
+}
+
 .project-overlay {
     position: absolute;
     inset: 0;
